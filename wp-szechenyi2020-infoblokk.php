@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Szechenyi2020 infoblokk
  * Plugin URI:        wp-szechenyi2020-infoblokk
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       A WordPress plugin which displays the Széchenyi 2020 infoblokk.
  * Version:           1.0.0
  * Author:            Balint Kovacs
  * Author URI:        https://bolint.hu
