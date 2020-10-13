@@ -27,7 +27,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,22 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -98,6 +99,54 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-szechenyi2020-infoblokk-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	public function add_settings_page() {
+		add_options_page( 'Széchenyi 2020 infóblokk', 'Széchenyi 2020 infóblokk', 'manage_options', 'wp-szechenyi2020-infoblokk', 'Wp_Szechenyi2020_Infoblokk_Admin::render_settings_page' );
+	}
+
+	public static function render_settings_page() {
+		?>
+        <h2><?php _e( 'Széchenyi 2020 infóblokk beállítások', 'wp-szechenyi2020-infoblokk' ) ?></h2>
+        <form action="options.php" method="post">
+			<?php
+			settings_fields( 'wp-szechenyi2020-infoblokk_options' );
+			do_settings_sections( 'wp-szechenyi2020-infoblokk_options' );
+			submit_button(); ?>
+        </form>
+		<?php
+	}
+
+	public static function register_settings() {
+		register_setting(
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_settings' );
+		add_settings_section(
+			'wp-szechenyi2020-infoblokk_position_section',
+			__( 'Pozíció', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::position_section_callback',
+			'wp-szechenyi2020-infoblokk_options' );
+
+		add_settings_field(
+			'wp-szechenyi2020-infoblokk_position',
+			__( 'Helyzete a honlapon', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::position_render',
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_position_section'
+		);
+	}
+
+	public static function position_render() {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' ); ?>
+        <select name='wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_position]'>
+            <option value='1' <?php selected( $options['wp-szechenyi2020-infoblokk_position'], 1 ); ?>>Felül</option>
+            <option value='2' <?php selected( $options['wp-szechenyi2020-infoblokk_position'], 2 ); ?>>Alul</option>
+        </select>
+		<?php
+	}
+
+	public static function position_section_callback() {
+		echo __( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
 	}
 
 }
