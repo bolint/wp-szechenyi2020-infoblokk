@@ -26,7 +26,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
-          extension-csv: mbstring, intl
+          extension-csv: mbstring, intl, mysql, mysqli
           ini-values-csv: post_max_size=256M, short_open_tag=On
           coverage: xdebug
           pecl: false
@@ -62,7 +62,7 @@ jobs:
         run: |
           composer global require phpcompatibility/phpcompatibility-wp
           composer global require wp-coding-standards/wpcs
-          phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+          composer global require dealerdirect/phpcodesniffer-composer-installer
 
       - name: Run PHPCS on the plugin
         run: phpcs
