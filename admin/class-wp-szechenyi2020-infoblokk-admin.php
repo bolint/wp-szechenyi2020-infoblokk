@@ -187,6 +187,6 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	}
 
 	public static function page_section_callback() {
-		_e( 'A Széchenyi 2020 keretében európai uniós támogatással megvalósuló projektet <u>részletező oldal</u> url-je, mignyitásának módja', 'wp-szechenyi2020-infoblokk' );
+		_e( 'A Széchenyi 2020 keretében európai uniós támogatással megvalósuló projektet <u>részletező oldal</u> url-je, megnyitásának módja', 'wp-szechenyi2020-infoblokk' );
 	}
 }
