@@ -142,7 +142,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 		add_settings_section(
 			'wp-szechenyi2020-infoblokk_image_section',
-			__( 'Megjelenített Kép', 'wp-szechenyi2020-infoblokk' ),
+			__( 'Megjelenített kép', 'wp-szechenyi2020-infoblokk' ),
 			'Wp_Szechenyi2020_Infoblokk_Admin::image_section_callback',
 			'wp-szechenyi2020-infoblokk_options' );
 
