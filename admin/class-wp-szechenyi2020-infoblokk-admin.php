@@ -146,7 +146,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	}
 
 	public static function position_section_callback() {
-		echo __( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
+		_e( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
 	}
 
 }
