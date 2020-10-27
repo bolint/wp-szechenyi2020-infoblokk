@@ -144,7 +144,8 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 			'wp-szechenyi2020-infoblokk_image_section',
 			__( 'Megjelenített kép', 'wp-szechenyi2020-infoblokk' ),
 			'Wp_Szechenyi2020_Infoblokk_Admin::image_section_callback',
-			'wp-szechenyi2020-infoblokk_options' );
+			'wp-szechenyi2020-infoblokk_options'
+    );
 
 		add_settings_field(
 			'wp-szechenyi2020-infoblokk_image_upload',
@@ -152,6 +153,29 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 			'Wp_Szechenyi2020_Infoblokk_Admin::image_upload_render',
 			'wp-szechenyi2020-infoblokk_options',
 			'wp-szechenyi2020-infoblokk_image_section'
+    );
+    
+    add_settings_section(
+			'wp-szechenyi2020-infoblokk_page_section',
+			__( 'Kapcsolódó oldal', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::page_section_callback',
+			'wp-szechenyi2020-infoblokk_options'
+    );
+
+		add_settings_field(
+			'wp-szechenyi2020-infoblokk_page_url',
+			__( '<label for="wp-szechenyi2020-infoblokk_page_url">Link</label>', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::page_render',
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_page_section'
+		);
+
+		add_settings_field(
+			'wp-szechenyi2020-infoblokk_page_target',
+			__( '<label for="wp-szechenyi2020-infoblokk_page_target">Új ablakot nyisson?</label>', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::page_target_render',
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_page_section'
 		);
 	}
 
@@ -196,5 +220,23 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 	public static function image_section_callback() {
 		_e( 'Az infóblokkban megjelenő kép', 'wp-szechenyi2020-infoblokk' );
+  }
+  
+	public static function page_render() {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
+		?>
+        <input type="url" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][url]" id="wp-szechenyi2020-infoblokk_page_url" value="<?php echo $options['wp-szechenyi2020-infoblokk_page']['url']; ?>">
+		<?php
+	}
+
+	public static function page_target_render() {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
+		?>
+        <input type="checkbox" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][target]" id="wp-szechenyi2020-infoblokk_page_target" value="1" <?php checked( $options['wp-szechenyi2020-infoblokk_page']['target'], 1 ); ?>>
+		<?php
+	}
+
+	public static function page_section_callback() {
+		_e( 'A Széchenyi 2020 keretében európai uniós támogatással megvalósuló projektet <u>részletező oldal</u> url-je, megnyitásának módja', 'wp-szechenyi2020-infoblokk' );
 	}
 }
