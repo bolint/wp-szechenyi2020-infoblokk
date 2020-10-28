@@ -97,6 +97,10 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 		 * class.
 		 */
 
+		if ( ! did_action( 'wp_enqueue_media' ) ) {
+			wp_enqueue_media();
+		}
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-szechenyi2020-infoblokk-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -137,10 +141,26 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 		);
 
 		add_settings_section(
+			'wp-szechenyi2020-infoblokk_image_section',
+			__( 'Megjelenített kép', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::image_section_callback',
+			'wp-szechenyi2020-infoblokk_options'
+    );
+
+		add_settings_field(
+			'wp-szechenyi2020-infoblokk_image_upload',
+			__( 'Kép beállítása', 'wp-szechenyi2020-infoblokk' ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::image_upload_render',
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_image_section'
+    );
+    
+    add_settings_section(
 			'wp-szechenyi2020-infoblokk_page_section',
 			__( 'Kapcsolódó oldal', 'wp-szechenyi2020-infoblokk' ),
 			'Wp_Szechenyi2020_Infoblokk_Admin::page_section_callback',
-			'wp-szechenyi2020-infoblokk_options' );
+			'wp-szechenyi2020-infoblokk_options'
+    );
 
 		add_settings_field(
 			'wp-szechenyi2020-infoblokk_page_url',
@@ -172,17 +192,47 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 		echo __( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
 	}
 
+	public static function image_upload_render() {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
+		$image_id = $options['wp-szechenyi2020-infoblokk_image_id'];
+		$image = wp_get_attachment_image_src( $image_id, 'thumbnail' );
+
+		if( $image ) {
+            ?>
+			    <a href="#" id="szechenyi2020_image_upload" class="button">
+                    <img src="<?php echo $image[0]; ?>" alt="<?php _e('Feltöltött kép', 'wp-szechenyi2020-infoblokk'); ?>">
+                    <span style="display:none"><?php _e('Kép feltöltése', 'wp-szechenyi2020-infoblokk'); ?></span>
+                </a><br>
+	            <a href="#" id="szechenyi2020_image_remove" class="button"><?php _e('Kép eltávolítása', 'wp-szechenyi2020-infoblokk'); ?></a>
+	            <input type="hidden" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_image_id]" value="<?php echo $image_id; ?>">
+            <?php
+		} else {
+            ?>
+			    <a href="#" id="szechenyi2020_image_upload" class="button">
+                    <img src="" alt="<?php _e('Feltöltött kép', 'wp-szechenyi2020-infoblokk'); ?>" style="display:none">
+                    <span><?php _e('Kép feltöltése', 'wp-szechenyi2020-infoblokk'); ?></span>
+                </a><br>
+                <a href="#" id="szechenyi2020_image_remove" class="button" style="display:none"><?php _e('Kép eltávolítása', 'wp-szechenyi2020-infoblokk'); ?></a>
+	            <input id="wp-szechenyi2020-infoblokk_image_id" type="hidden" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_image_id]" value="">
+            <?php
+		}
+	}
+
+	public static function image_section_callback() {
+		_e( 'Az infóblokkban megjelenő kép', 'wp-szechenyi2020-infoblokk' );
+  }
+  
 	public static function page_render() {
 		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
 		?>
-            <input type="url" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][url]" id="wp-szechenyi2020-infoblokk_page_url" value="<?php echo $options['wp-szechenyi2020-infoblokk_page']['url']; ?>">
+        <input type="url" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][url]" id="wp-szechenyi2020-infoblokk_page_url" value="<?php echo $options['wp-szechenyi2020-infoblokk_page']['url']; ?>">
 		<?php
 	}
 
 	public static function page_target_render() {
 		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
 		?>
-            <input type="checkbox" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][target]" id="wp-szechenyi2020-infoblokk_page_target" value="1" <?php checked( $options['wp-szechenyi2020-infoblokk_page']['target'], 1 ); ?>>
+        <input type="checkbox" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][target]" id="wp-szechenyi2020-infoblokk_page_target" value="1" <?php checked( $options['wp-szechenyi2020-infoblokk_page']['target'], 1 ); ?>>
 		<?php
 	}
 
