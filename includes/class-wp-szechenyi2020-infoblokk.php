@@ -173,8 +173,9 @@ class Wp_Szechenyi2020_Infoblokk {
 
 		$plugin_public = new Wp_Szechenyi2020_Infoblokk_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 10 );
+
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'render' );
 
 	}
 

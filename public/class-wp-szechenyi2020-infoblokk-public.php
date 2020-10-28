@@ -78,26 +78,52 @@ class Wp_Szechenyi2020_Infoblokk_Public {
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Display the "infoblokk" on frontend
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function render () {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wp_Szechenyi2020_Infoblokk_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wp_Szechenyi2020_Infoblokk_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
+		$image_id = $options['wp-szechenyi2020-infoblokk_image_id'];
+		if (!$image_id) {
+			/*
+			 * Nothing to display
+			 */
+			return;
+		}
+
+		$image = wp_get_attachment_image( $options['wp-szechenyi2020-infoblokk_image_id'] );
+
+		/*
+		 * Specify position to display
+		 * default: top
 		 */
+		$placement = 'top';
+		if ('2' === $options['wp-szechenyi2020-infoblokk_position']) {
+			$placement = 'bottom';
+		}
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-szechenyi2020-infoblokk-public.js', array( 'jquery' ), $this->version, false );
+		$url = $options['wp-szechenyi2020-infoblokk_page']['url'];
+		if (!$url) {
+			/*
+			 * No url specified for the image
+			 */
+			printf('<span class="wp-szechenyi2020-infoblokk" data-placement="%s">%s</span>', $placement, $image);
+			return;
+		}
 
+		/*
+		 * Link will be opened in a new tab/window or not
+		 */
+		$target = '';
+		if ($options['wp-szechenyi2020-infoblokk_page']['target']) {
+		    $target = 'target="_blank"';
+		}
+
+		/*
+		 * Render the image with link
+		 */
+		printf('<a class="wp-szechenyi2020-infoblokk" data-placement="%s" href="%s" %s>%s</a>', $placement, $url, $target, $image);
 	}
-
 }
