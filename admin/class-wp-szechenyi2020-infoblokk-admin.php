@@ -155,6 +155,14 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 			'wp-szechenyi2020-infoblokk_image_section'
 		);
 
+		add_settings_field(
+			'wp-szechenyi2020-infoblokk_image_height',
+			sprintf( '<label for="wp-szechenyi2020-infoblokk_image_height">%s</label>', __( 'Kép magassága (min. 150px)', 'wp-szechenyi2020-infoblokk' ) ),
+			'Wp_Szechenyi2020_Infoblokk_Admin::image_height_render',
+			'wp-szechenyi2020-infoblokk_options',
+			'wp-szechenyi2020-infoblokk_image_section'
+		);
+
 		add_settings_section(
 			'wp-szechenyi2020-infoblokk_page_section',
 			__( 'Kapcsolódó oldal', 'wp-szechenyi2020-infoblokk' ),
@@ -224,6 +232,17 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 	public static function image_section_callback() {
 		_e( 'Az infóblokkban megjelenő kép', 'wp-szechenyi2020-infoblokk' );
+	}
+
+	public static function image_height_render() {
+		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
+		?>
+        <input type="number" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_image_height]"
+               id="wp-szechenyi2020-infoblokk_image_height"
+               min="150"
+               max="600"
+               value="<?php echo $options['wp-szechenyi2020-infoblokk_image_height']; ?>">
+		<?php
 	}
 
 	public static function page_render() {
