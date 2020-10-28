@@ -93,7 +93,8 @@ class Wp_Szechenyi2020_Infoblokk_Public {
 			return;
 		}
 
-		$image = wp_get_attachment_image( $options['wp-szechenyi2020-infoblokk_image_id'] );
+		$height = intval($options['wp-szechenyi2020-infoblokk_image_height']) >= 150 ?: 150;
+		$image = wp_get_attachment_image( $options['wp-szechenyi2020-infoblokk_image_id'], array('auto', $height) );
 
 		/*
 		 * Specify position to display
