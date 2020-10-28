@@ -186,7 +186,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 		add_settings_field(
 			'wp-szechenyi2020-infoblokk_page_url',
-			__( '<label for="wp-szechenyi2020-infoblokk_page_url">Link</label>', 'wp-szechenyi2020-infoblokk' ),
+			sprintf('<label for="wp-szechenyi2020-infoblokk_page_url">%s</label>', __( 'Link', 'wp-szechenyi2020-infoblokk' )),
 			'Wp_Szechenyi2020_Infoblokk_Admin::page_render',
 			'wp-szechenyi2020-infoblokk_options',
 			'wp-szechenyi2020-infoblokk_page_section'
@@ -194,7 +194,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 
 		add_settings_field(
 			'wp-szechenyi2020-infoblokk_page_target',
-			__( '<label for="wp-szechenyi2020-infoblokk_page_target">Új ablakot nyisson?</label>', 'wp-szechenyi2020-infoblokk' ),
+			sprintf('<label for="wp-szechenyi2020-infoblokk_page_target">%s</label>', __( 'Új ablakot nyisson?', 'wp-szechenyi2020-infoblokk' )),
 			'Wp_Szechenyi2020_Infoblokk_Admin::page_target_render',
 			'wp-szechenyi2020-infoblokk_options',
 			'wp-szechenyi2020-infoblokk_page_section'
@@ -211,7 +211,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	}
 
 	public static function position_section_callback() {
-		echo __( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
+		_e( 'Az infóblokk megjelenésének testreszabása', 'wp-szechenyi2020-infoblokk' );
 	}
 
 	public static function image_upload_render() {
@@ -264,7 +264,7 @@ class Wp_Szechenyi2020_Infoblokk_Admin {
 	public static function page_render() {
 		$options = get_option( 'wp-szechenyi2020-infoblokk_settings' );
 		?>
-            <input type="url" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][url]" id="wp-szechenyi2020-infoblokk_page_url" value="<?php echo $options['wp-szechenyi2020-infoblokk_page']['url']; ?>">
+            <input type="url" name="wp-szechenyi2020-infoblokk_settings[wp-szechenyi2020-infoblokk_page][url]" id="wp-szechenyi2020-infoblokk_page_url" value="<?php echo esc_url_raw($options['wp-szechenyi2020-infoblokk_page']['url']); ?>">
 		<?php
 	}
 
