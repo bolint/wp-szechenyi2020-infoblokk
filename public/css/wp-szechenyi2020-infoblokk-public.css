@@ -2,3 +2,30 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.wp-szechenyi2020-infoblokk {
+    position: fixed;
+    right: 0;
+    z-index: 11;
+}
+
+@media (max-width: 600px) {
+    .wp-szechenyi2020-infoblokk[data-placement=top] {
+        top: 0;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 782px) {
+    .admin-bar .wp-szechenyi2020-infoblokk[data-placement=top] {
+        top: 46px;
+    }
+}
+
+@media (min-width: 783px) {
+    .admin-bar .wp-szechenyi2020-infoblokk[data-placement=top] {
+        top: 32px;
+    }
+}
+
+.wp-szechenyi2020-infoblokk[data-placement=bottom] {
+    bottom: 0;
+}

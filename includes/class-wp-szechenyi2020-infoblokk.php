@@ -157,6 +157,9 @@ class Wp_Szechenyi2020_Infoblokk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_settings_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+
 	}
 
 	/**
@@ -170,8 +173,9 @@ class Wp_Szechenyi2020_Infoblokk {
 
 		$plugin_public = new Wp_Szechenyi2020_Infoblokk_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 10 );
+
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'render' );
 
 	}
 
